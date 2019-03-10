@@ -1,5 +1,6 @@
 package com.loloc.horsefeeder;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.loloc.horsefeeder.data.CustomAdapter;
 import com.loloc.horsefeeder.data.Horse;
 import com.loloc.horsefeeder.data.ViewVisibility;
 
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Horse horse = new Horse();
     ViewVisibility viewVisibility = new ViewVisibility();
     ListView supplementListView;
+    Context context = this;
 
     public void slideDataCollectionViews(){
         viewVisibility.arrayViewHide(workLoad);
@@ -41,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         weight              = findViewById(R.id.editText);
         supplementListView  = findViewById(R.id.supplementListView);
 
-        horse.listViewAdapterSettings(this, supplementListView);
+        //horse.listViewAdapterSettings(this, supplementListView);
 
         viewVisibility.getContext(this);
 
@@ -49,11 +52,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                horse.onClickCalculate(weight);
+                EditText weightEditText = (EditText) weight;
+                Integer horseWeight = Integer.parseInt(weightEditText.getText().toString());
+                horse.onClickCalculate(horseWeight);
                 viewVisibility.viewHide(weight);
                 viewVisibility.hideKeyboard(weight);
                 viewVisibility.viewShow(supplementListView);
-                horse.refreshList();
+                horse.customAdapter(context, supplementListView);
 
             }
           });

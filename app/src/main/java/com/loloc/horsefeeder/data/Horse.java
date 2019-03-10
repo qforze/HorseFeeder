@@ -1,17 +1,22 @@
 package com.loloc.horsefeeder.data;
 
 import android.content.Context;
+import android.inputmethodservice.Keyboard;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class Horse {
 
-    public ArrayList<String> list = new ArrayList<>();
-    private ArrayAdapter<String> adapter;
+    public ArrayList<String> listNames = new ArrayList<>();
+    public ArrayList<Integer> listResults = new ArrayList<>();
+    RowItem rowItem;
+    List<RowItem> rowitems;
     private int bodyWeight;
     private int workLoad;
     private double sweatLoss;
@@ -72,12 +77,7 @@ public class Horse {
 
     }
 
-    public void onClickCalculate(View view) {
-
-        EditText weightEditText = (EditText) view;
-
-        Integer horseWeight = Integer.parseInt(weightEditText.getText().toString());
-
+    public void onClickCalculate(int horseWeight) {
 
         if (horseWeight > 0 && horseWeight < 1000){
 
@@ -139,27 +139,53 @@ public class Horse {
         }
         refreshList();
     }
-    public void refreshList(){
+    public void refreshList() {
 
-        adapter.clear();
+        listNames.add("Digestible Energy");
+        listNames.add("Crude Protein");
+       // listNames.add("Lysine");
+       // listNames.add("Calcium");
+       // listNames.add("Phosphorus");
+       // listNames.add("Sodium");
+        //listNames.add("Potassium");
+       // listNames.add("Chlorine");
 
-        list.add("Digestible Energy (Mcal)  " + String.format("%.1f", dE));
-        list.add("Crude Protein (g)         " + String.format("%.1f", cP));
-        list.add("Lysine        (g)         " + String.format("%.1f", lys));
-        list.add("Calcium       (g)         " + String.format("%.1f", cA));
-        list.add("Phosphorus    (g)         " + String.format("%.1f", p));
-        list.add("Sodium        (g)         " + String.format("%.1f", nA));
-        list.add("Potassium     (g)         " + String.format("%.1f", k));
-        list.add("Chlorine      (g)         " + String.format("%.1f", cL));
+        listResults.add(1);
+        listResults.add(2);
+        //listResults.add("Lysine");
+        //listResults.add("Calcium");
+        //listResults.add("Phosphorus");
+        //listResults.add("Sodium");
+       // listResults.add("Potassium");
+        //listResults.add("Chlorine");
 
-        adapter.notifyDataSetChanged();
+        rowitems = new ArrayList<RowItem>();
 
+        for (int i = 0; i < listNames.size(); i++) {
+
+            rowItem = new RowItem(listNames.get(i),listResults.get(i));
+            rowitems.add(rowItem);
+        }
+
+        Log.i("superinfo", String.valueOf(rowItem));
     }
+        public void customAdapter(Context context, ListView listview){
 
-    public void listViewAdapterSettings(Context context, ListView listView) {
+        CustomAdapter adapter = new CustomAdapter(context, rowitems);
+        listview.setAdapter(adapter);
 
-        adapter = new ArrayAdapter<String>
-                (context, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
-    }
-}
+        }
+
+
+       /* listResults.add(String.valueOf(dE));
+        listResults.add(String.valueOf(cP));
+        listResults.add(String.valueOf(lys));
+        listResults.add(String.valueOf(cA));
+        listResults.add(String.valueOf(p));
+        listResults.add(String.valueOf(nA));
+        listResults.add(String.valueOf(k));
+        listResults.add(String.valueOf(cL));
+        */
+
+
+   }
