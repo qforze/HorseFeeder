@@ -18,13 +18,10 @@ public class CustomAdapter extends BaseAdapter {
     Context context;
     List<RowItem> rowItems;
 
-   public CustomAdapter(Context context, List<RowItem> rowitems) {
+    public CustomAdapter(Context context, List<RowItem> rowitems) {
 
         this.context = context;
         this.rowItems = rowitems;
-
-       Log.i("superduperinfo", String.valueOf(this.rowItems));
-
     }
 
 
@@ -40,41 +37,26 @@ public class CustomAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return rowItems.indexOf(getItem(position));
-    }
-
-    private class ViewHolder {
-
-        TextView supplement;
-        TextView amount;
-
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
-
-        LayoutInflater hInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 
         if (convertView == null) {
-
-            convertView = hInflater.inflate(R.layout.list_item, null);
-            holder = new ViewHolder();
-
-            holder.supplement = convertView.findViewById(R.id.textView_supplement);
-            holder.amount = convertView.findViewById(R.id.textView_amount);
-
-            RowItem row_pos = rowItems.get(position);
-
-            holder.supplement.setText(row_pos.getSupplement());
-            holder.amount.setText(row_pos.getAmount().toString());
-
-            convertView.setTag(holder);
-
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+            convertView = LayoutInflater.from(context).
+                    inflate(R.layout.list_item, parent, false);
 
         }
+
+        RowItem currentItem = (RowItem) getItem(position);
+
+        TextView supplement =   supplement = (TextView) convertView.findViewById(R.id.textView_supplement);
+        TextView amount = amount = (TextView) convertView.findViewById(R.id.textView_amount);
+
+        supplement.setText(currentItem.getSupplement());
+        amount.setText(currentItem.getAmount().toString());
+
         return convertView;
     }
-}
+    }

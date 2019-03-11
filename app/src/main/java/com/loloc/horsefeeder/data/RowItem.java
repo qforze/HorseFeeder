@@ -1,8 +1,5 @@
 package com.loloc.horsefeeder.data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RowItem {
 
     private String supplement;

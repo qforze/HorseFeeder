@@ -29,6 +29,12 @@ public class MainActivity extends AppCompatActivity {
         viewVisibility.viewHide(generalInformation);
         viewVisibility.viewShow(weight);
     }
+    public void customAdapter(){
+
+        CustomAdapter adapter = new CustomAdapter(context, horse.rowitems);
+        supplementListView.setAdapter(adapter);
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
         weight              = findViewById(R.id.editText);
         supplementListView  = findViewById(R.id.supplementListView);
 
-        //horse.listViewAdapterSettings(this, supplementListView);
 
-        viewVisibility.getContext(this);
 
         weight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,10 +59,12 @@ public class MainActivity extends AppCompatActivity {
                 EditText weightEditText = (EditText) weight;
                 Integer horseWeight = Integer.parseInt(weightEditText.getText().toString());
                 horse.onClickCalculate(horseWeight);
+                horse.refreshList();
                 viewVisibility.viewHide(weight);
+                viewVisibility.getContext(context);
                 viewVisibility.hideKeyboard(weight);
                 viewVisibility.viewShow(supplementListView);
-                horse.customAdapter(context, supplementListView);
+                customAdapter();
 
             }
           });

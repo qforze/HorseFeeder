@@ -1,22 +1,18 @@
 package com.loloc.horsefeeder.data;
 
 import android.content.Context;
-import android.inputmethodservice.Keyboard;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class Horse {
 
     public ArrayList<String> listNames = new ArrayList<>();
     public ArrayList<Integer> listResults = new ArrayList<>();
     RowItem rowItem;
-    List<RowItem> rowitems;
+    public List<RowItem> rowitems;
     private int bodyWeight;
     private int workLoad;
     private double sweatLoss;
@@ -137,27 +133,26 @@ public class Horse {
                 break;
 
         }
-        refreshList();
     }
     public void refreshList() {
 
         listNames.add("Digestible Energy");
         listNames.add("Crude Protein");
-       // listNames.add("Lysine");
-       // listNames.add("Calcium");
-       // listNames.add("Phosphorus");
-       // listNames.add("Sodium");
-        //listNames.add("Potassium");
-       // listNames.add("Chlorine");
+        listNames.add("Lysine");
+        listNames.add("Calcium");
+        listNames.add("Phosphorus");
+        listNames.add("Sodium");
+        listNames.add("Potassium");
+        listNames.add("Chlorine");
 
-        listResults.add(1);
-        listResults.add(2);
-        //listResults.add("Lysine");
-        //listResults.add("Calcium");
-        //listResults.add("Phosphorus");
-        //listResults.add("Sodium");
-       // listResults.add("Potassium");
-        //listResults.add("Chlorine");
+        listResults.add((int) Math.round(dE));
+        listResults.add((int) Math.round(cP));
+        listResults.add((int) Math.round(lys));
+        listResults.add((int) Math.round(cA));
+        listResults.add((int) Math.round(p));
+        listResults.add((int) Math.round(k));
+        listResults.add((int) Math.round(nA));
+        listResults.add((int) Math.round(cL));
 
         rowitems = new ArrayList<RowItem>();
 
@@ -166,26 +161,5 @@ public class Horse {
             rowItem = new RowItem(listNames.get(i),listResults.get(i));
             rowitems.add(rowItem);
         }
-
-        Log.i("superinfo", String.valueOf(rowItem));
     }
-        public void customAdapter(Context context, ListView listview){
-
-        CustomAdapter adapter = new CustomAdapter(context, rowitems);
-        listview.setAdapter(adapter);
-
-        }
-
-
-       /* listResults.add(String.valueOf(dE));
-        listResults.add(String.valueOf(cP));
-        listResults.add(String.valueOf(lys));
-        listResults.add(String.valueOf(cA));
-        listResults.add(String.valueOf(p));
-        listResults.add(String.valueOf(nA));
-        listResults.add(String.valueOf(k));
-        listResults.add(String.valueOf(cL));
-        */
-
-
    }
